@@ -27,13 +27,14 @@
 /**
  * @return void
  */
-function tool_developer_before_http_headers() {
+function tool_developer_before_http_headers() : void{
 
     global $CFG;
     if (!empty($CFG->cachejs)) {
         return;
     }
 
+    // Register new service worker.
     $CFG->additionalhtmlhead .= '<script>
     if (\'serviceWorker\' in navigator) {
       window.addEventListener(\'load\', function() {
@@ -48,7 +49,12 @@ function tool_developer_before_http_headers() {
 
 }
 
-function tool_developer_after_config() {
+/**
+ * Load service worker from root scope
+ *
+ * @return void
+ */
+function tool_developer_after_config() :void {
     $serviceworker = optional_param('serviceworker', false, PARAM_BOOL);
     if ($serviceworker) {
         header('Content-Type: application/javascript');
