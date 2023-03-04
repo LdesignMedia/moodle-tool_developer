@@ -15,7 +15,7 @@ Should be used in test environments only.
 ![Privacy-friendly](https://img.shields.io/badge/Privacy-friendly-brightgreen.svg)
 
 ## List of features
-- Service worker to load debug javascript once.
+- Service worker to load debug javascript once if `cachejs` setting is disabled.
 - TODO easy see if debug is on (enable fast switching)
 - TODO Record error traces to log
 - TODO debugbar

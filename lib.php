@@ -29,14 +29,30 @@
  */
 function tool_developer_before_http_headers() {
 
+    global $CFG;
+    if (!empty($CFG->cachejs)) {
+        return;
+    }
+
+    $CFG->additionalhtmlhead .= '<script>
+    if (\'serviceWorker\' in navigator) {
+      window.addEventListener(\'load\', function() {
+        navigator.serviceWorker.register(\'/?serviceworker=1\').then(function(registration) {
+          console.log(\'Service Worker registered with scope:\', registration.scope);
+        }, function(err) {
+          console.log(\'Service Worker registration failed:\', err);
+        });
+      });
+    }
+    </script>';
+
 }
 
-/**
- * Load the service worker
- *
- * @return void
- */
 function tool_developer_after_config() {
-    global $PAGE;
-   $PAGE->requires->js('/admin/tool/developer/worker.php' , true);
+    $serviceworker = optional_param('serviceworker', false, PARAM_BOOL);
+    if ($serviceworker) {
+        header('Content-Type: application/javascript');
+        echo file_get_contents(__DIR__ . '/static-worker.js');
+        die;
+    }
 }
