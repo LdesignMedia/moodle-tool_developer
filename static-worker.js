@@ -1,40 +1,41 @@
-const cacheName = 'moodle-cache';
+const CACHE_NAME = 'moodle-cache';
+const URLS_TO_CACHE = [
+    /\/lib\/requirejs\.php\/-1\/core\//,
+    /\/lib\/requirejs\.php\/-1\/theme_/,
+    /\/lib\/requirejs\.php\/-1\/message_/,
+    /\/theme\/yui_combo\.php/,
+    /\/lib\/requirejs\.php\/-1\/block_myoverview/,
+    /\/lib\/javascript\.php\/-1\/lib\//,
+    /\/lib\/javascript\.php\/-1\/course\/dndupload/
+];
 
-// When a JavaScript file is requested, check the cache first and return it if it's there
-// Otherwise, fetch it from the network and add it to the cache
 self.addEventListener('fetch', event => {
-
-    // Check if the request is for a JavaScript file
-    if (!event.request.url.endsWith('.js')) {
+    const url = new URL(event.request.url);
+    if (!url.pathname.endsWith('.js') || !URLS_TO_CACHE.some(regex => regex.test(url.pathname))) {
         return;
     }
 
-
     event.respondWith(
-        caches.open(cacheName)
+        caches.open(CACHE_NAME)
             .then(cache => cache.match(event.request))
             .then(response => {
                 if (response) {
-                    // Cache hit - return response
-                    console.log(`Cache hit: ${event.request.url}`);
+                    console.log(`Cache hit: ${url.pathname}`);
                     return response;
                 }
 
-                // Cache miss - fetch from network
-                console.log(`Cache miss: ${event.request.url}`);
+                console.log(`Cache miss: ${url.pathname}`);
                 return fetch(event.request)
                     .then(response => {
-                        // Check if we received a valid response
                         if (!response || response.status !== 200 || response.type !== 'basic') {
-                            console.log(`Invalid response: ${event.request.url}`);
+                            console.log(`Invalid response: ${url.pathname}`);
                             return response;
                         }
 
-                        // Clone the response and add it to the cache
                         const responseToCache = response.clone();
-                        caches.open(cacheName)
+                        caches.open(CACHE_NAME)
                             .then(cache => {
-                                console.log(`Adding response to cache: ${event.request.url}`);
+                                console.log(`Adding response to cache: ${url.pathname}`);
                                 cache.put(event.request, responseToCache);
                             });
 
