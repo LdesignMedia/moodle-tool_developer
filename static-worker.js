@@ -1,17 +1,22 @@
 const CACHE_NAME = 'moodle-cache';
 const URLS_TO_CACHE = [
-    /\/lib\/requirejs\.php\/-1\/core\//,
+    /\/lib\/requirejs\.php\/-1\/core/,
     /\/lib\/requirejs\.php\/-1\/theme_/,
     /\/lib\/requirejs\.php\/-1\/message_/,
+    /\/lib\/requirejs\.php\/-1\/media_videojs/,
     /\/theme\/yui_combo\.php/,
+    /\/lib\/requirejs\.php\/-1\/block_recentlyaccessedcourses/,
+    /\/lib\/requirejs\.php\/-1\/block_online_users/,
+    /\/lib\/requirejs\.php\/-1\/local_commander/,
     /\/lib\/requirejs\.php\/-1\/block_myoverview/,
+    /\/lib\/requirejs\.php\/-1\/block_timeline/,
     /\/lib\/javascript\.php\/-1\/lib\//,
     /\/lib\/javascript\.php\/-1\/course\/dndupload/
 ];
 
 self.addEventListener('fetch', event => {
     const url = new URL(event.request.url);
-    if (!url.pathname.endsWith('.js') || !URLS_TO_CACHE.some(regex => regex.test(url.pathname))) {
+    if (!URLS_TO_CACHE.some(regex => regex.test(url.pathname))) {
         return;
     }
 
