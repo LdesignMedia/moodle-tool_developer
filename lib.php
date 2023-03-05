@@ -25,9 +25,33 @@
  **/
 
 /**
+ * Try to load it as fast as possible
+ *
  * @return void
  */
-function tool_developer_before_http_headers() : void{
+function load_sentry() {
+
+    static $loaded = false;
+
+    if (!empty($loaded)) {
+        return;
+    }
+
+    require_once(__DIR__ . '/vendor/autoload.php');
+    \Sentry\init(['dsn' => getenv('SENTRYDNS')]);
+    \Sentry\configureScope(function (\Sentry\State\Scope $scope): void {
+        global $USER;
+        $scope->setUser(['id' => $USER->id]);
+    });
+    $loaded = true;
+}
+
+load_sentry();
+
+/**
+ * @return void
+ */
+function tool_developer_before_http_headers(): void {
 
     global $CFG;
     if (!empty($CFG->cachejs)) {
@@ -54,7 +78,7 @@ function tool_developer_before_http_headers() : void{
  *
  * @return void
  */
-function tool_developer_after_config() :void {
+function tool_developer_after_config(): void {
     $serviceworker = optional_param('serviceworker', false, PARAM_BOOL);
     if ($serviceworker) {
         header('Content-Type: application/javascript');
