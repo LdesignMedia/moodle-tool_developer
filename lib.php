@@ -60,12 +60,13 @@ function tool_developer_before_http_headers(): void {
     global $CFG;
 
     // Always catch JS errors.
-    $CFG->additionalhtmlfooter .= '<script src=\'https://js.sentry-cdn.com/620235bf8b944a7caff0869b27c1f999.min.js\'
-    crossorigin="anonymous"></script><script>Sentry.init({
+    $CFG->additionalhtmlhead .= '<script src="https://browser.sentry-cdn.com/7.40.0/bundle.tracing.replay.min.js"
+  integrity="sha384-ucxPsCkRds5vICOoq+CNlwpaY/vlgZdwDqr/I+CKUsm+pBm5r6KNL+Y95Mo0o2tI" crossorigin="anonymous"></script>
+  <script>Sentry.init({
       dsn: "' . getenv('SENTRYDNS') . '",
-      release: "dev@1.0.0",
+      release: "' . parse_url($CFG->wwwroot ?? '', PHP_URL_HOST) . '@1.0.0",
       tracesSampleRate: 1.0,
-      environment : "' . parse_url($CFG->wwwroot ?? '', PHP_URL_HOST) . '"",
+      environment : "' . parse_url($CFG->wwwroot ?? '', PHP_URL_HOST) . '",
     });</script>';
 
     if (!empty($CFG->cachejs)) {
@@ -84,7 +85,6 @@ function tool_developer_before_http_headers(): void {
       });
     }
     </script>';
-
 }
 
 /**
