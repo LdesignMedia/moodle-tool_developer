@@ -45,7 +45,7 @@ function load_sentry() {
     ]);
     \Sentry\configureScope(function (\Sentry\State\Scope $scope): void {
         global $USER;
-        $scope->setUser(['id' => $USER->id]);
+        $scope->setUser(['id' => $USER->id ?? 0]);
     });
     $loaded = true;
 }
