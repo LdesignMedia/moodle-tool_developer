@@ -38,7 +38,10 @@ function load_sentry() {
     }
 
     require_once(__DIR__ . '/vendor/autoload.php');
-    \Sentry\init(['dsn' => getenv('SENTRYDNS')]);
+    \Sentry\init([
+        'dsn' => getenv('SENTRYDNS'),
+        'traces_sample_rate' => 1.0,
+    ]);
     \Sentry\configureScope(function (\Sentry\State\Scope $scope): void {
         global $USER;
         $scope->setUser(['id' => $USER->id]);
@@ -54,6 +57,15 @@ load_sentry();
 function tool_developer_before_http_headers(): void {
 
     global $CFG;
+
+    // Always catch JS errors.
+    $CFG->additionalhtmlfooter .= '<script src=\'https://js.sentry-cdn.com/620235bf8b944a7caff0869b27c1f999.min.js\'
+    crossorigin="anonymous"></script><script>Sentry.init({
+      dsn: "' . getenv('SENTRYDNS') . '",
+      release: "dev@1.0.0",
+      tracesSampleRate: 1.0,
+    });</script>';
+
     if (!empty($CFG->cachejs)) {
         return;
     }
