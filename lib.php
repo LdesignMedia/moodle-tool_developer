@@ -68,6 +68,18 @@ function tool_developer_before_http_headers(): void {
       tracesSampleRate: 1.0,
       integrations: [new Sentry.BrowserTracing()],
       environment : "' . parse_url($CFG->wwwroot ?? '', PHP_URL_HOST) . '",
+
+      // This sets the sample rate to be 10%. You may want this to be 100% while
+      // in development and sample at a lower rate in production
+      replaysSessionSampleRate: 0.1,
+      replaysOnErrorSampleRate: 1.0,
+
+      integrations: [
+        new Sentry.Replay({
+          maskAllText: true,
+          blockAllMedia: true,
+        }),
+      ],
     });</script>';
 
     if (!empty($CFG->cachejs)) {
