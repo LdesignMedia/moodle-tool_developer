@@ -41,6 +41,7 @@ function load_sentry() {
     \Sentry\init([
         'dsn' => getenv('SENTRYDNS'),
         'traces_sample_rate' => 1.0,
+        'environment' => parse_url($CFG->wwwroot ?? '', PHP_URL_HOST),
     ]);
     \Sentry\configureScope(function (\Sentry\State\Scope $scope): void {
         global $USER;
@@ -64,6 +65,7 @@ function tool_developer_before_http_headers(): void {
       dsn: "' . getenv('SENTRYDNS') . '",
       release: "dev@1.0.0",
       tracesSampleRate: 1.0,
+      environment : "' . parse_url($CFG->wwwroot ?? '', PHP_URL_HOST) . '"",
     });</script>';
 
     if (!empty($CFG->cachejs)) {
