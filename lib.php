@@ -66,6 +66,7 @@ function tool_developer_before_http_headers(): void {
       dsn: "' . getenv('SENTRYDNS') . '",
       release: "' . parse_url($CFG->wwwroot ?? '', PHP_URL_HOST) . '@1.0.0",
       tracesSampleRate: 1.0,
+      integrations: [new Sentry.BrowserTracing()],
       environment : "' . parse_url($CFG->wwwroot ?? '', PHP_URL_HOST) . '",
     });</script>';
 
