@@ -60,7 +60,7 @@ function tool_developer_before_http_headers(): void {
     global $CFG, $PAGE;
 
     // Flag prevents saving this to the config and can be used for debugging.
-    if (!empty($PAGE->url) && $PAGE->url->get_param('section') === 'additionalhtml') {
+    if ($PAGE->url->get_param('section') === 'additionalhtml') {
         return;
     }
 
