@@ -1,7 +1,7 @@
 const CACHE_NAME = 'moodle-cache';
 const URLS_TO_CACHE = [
     /\/lib\/requirejs\.php\/-1\/core/,
-    /\/lib\/requirejs\.php\/-1\/theme_/,
+    /\/lib\/requirejs\.php\/-1\/theme_boost/,
     /\/lib\/requirejs\.php\/-1\/message_/,
     /\/lib\/requirejs\.php\/-1\/media_videojs/,
     /\/theme\/yui_combo\.php/,
