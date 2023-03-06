@@ -57,23 +57,24 @@ load_sentry();
  */
 function tool_developer_before_http_headers(): void {
 
-    global $CFG;
+    global $CFG, $PAGE;
+
+    // Flag prevents saving this to the config and can be used for debugging.
+    if (!empty($PAGE->url) && $PAGE->url->get_param('section') === 'additionalhtml') {
+        return;
+    }
 
     // Always catch JS errors.
     $CFG->additionalhtmlhead .= '<script src="https://browser.sentry-cdn.com/7.40.0/bundle.tracing.replay.min.js"
   integrity="sha384-ucxPsCkRds5vICOoq+CNlwpaY/vlgZdwDqr/I+CKUsm+pBm5r6KNL+Y95Mo0o2tI" crossorigin="anonymous"></script>
-  <script>Sentry.init({
+  <script defer>Sentry.init({
       dsn: "' . getenv('SENTRYDNS') . '",
       release: "' . parse_url($CFG->wwwroot ?? '', PHP_URL_HOST) . '@1.0.0",
       tracesSampleRate: 1.0,
       integrations: [new Sentry.BrowserTracing()],
       environment : "' . parse_url($CFG->wwwroot ?? '', PHP_URL_HOST) . '",
-
-      // This sets the sample rate to be 10%. You may want this to be 100% while
-      // in development and sample at a lower rate in production
       replaysSessionSampleRate: 0.1,
       replaysOnErrorSampleRate: 1.0,
-
       integrations: [
         new Sentry.Replay({
           maskAllText: true,

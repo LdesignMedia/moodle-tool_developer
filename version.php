@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- *
+ * Version information
  *
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
@@ -26,7 +26,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'tool_developer';
-$plugin->release = '3.9.0 (Build: 2023030400)';
-$plugin->version = 2023030402;
+$plugin->release = '3.9.0 (Build: 2023030600)';
+$plugin->version = 2023030600;
 $plugin->requires = 2020051705;
 $plugin->maturity = MATURITY_STABLE;
