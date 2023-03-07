@@ -13,6 +13,7 @@ Should be used in test environments only.
 ![Moodle39](https://img.shields.io/badge/moodle-3.9-brightgreen.svg)
 ![PHP7.4](https://img.shields.io/badge/PHP-7.4-brightgreen.svg)
 ![Privacy-friendly](https://img.shields.io/badge/Privacy-friendly-brightgreen.svg)
+![GitHub Workflow Status (main)](https://img.shields.io/github/workflow/status/catalyst/moodle-tool_developer/ci/main?label=ci)
 
 ## List of features
 - Service worker to load debug javascript once if `cachejs` setting is disabled.

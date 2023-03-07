@@ -27,6 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'tool_developer';
 $plugin->release = '3.9.0 (Build: 2023030600)';
+$plugin->supported = [39, 401];
 $plugin->version = 2023030600;
 $plugin->requires = 2020051705;
 $plugin->maturity = MATURITY_STABLE;
