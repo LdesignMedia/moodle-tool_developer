@@ -23,6 +23,7 @@
  * @copyright 04/03/2023 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
  * @author    Luuk Verhoeven
  **/
+defined('MOODLE_INTERNAL') || die;
 
 /**
  * Try to load it as fast as possible
