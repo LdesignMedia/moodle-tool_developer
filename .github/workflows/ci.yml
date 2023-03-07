@@ -13,3 +13,4 @@ jobs:
       #Grunt fails due to CSS styling needing an !important.
       disable_grunt: true
       release_branches: main
+      min_php : 7.4
