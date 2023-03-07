@@ -30,7 +30,7 @@ defined('MOODLE_INTERNAL') || die;
  *
  * @return void
  */
-function load_sentry() {
+function load_sentry() : void {
 
     static $loaded = false;
 
@@ -54,6 +54,8 @@ function load_sentry() {
 load_sentry();
 
 /**
+ * Add extra HTML to page fast and dirty way to load extra's to additionalhtmlhead
+ *
  * @return void
  */
 function tool_developer_before_http_headers(): void {
