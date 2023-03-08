@@ -132,10 +132,13 @@ function tool_developer_after_config(): void {
     // Make sure is set.
     $SESSION->tool_developer_upgrade = $SESSION->tool_developer_upgrade ?? 0;
 
-    if (moodle_needs_upgrading() && $SESSION->tool_developer_upgrade < 6) {
+    if (moodle_needs_upgrading() && $SESSION->tool_developer_upgrade < 8) {
         // Auto upgrade attempt.
         $PAGE->requires->js_call_amd('tool_developer/autoupgrade', 'init', [[]]);
         $SESSION->tool_developer_upgrade = ($SESSION->tool_developer_upgrade ?? 0) + 1;
+    } else {
+        // Reset.
+        $SESSION->tool_developer_upgrade = 0;
     }
 
 }
