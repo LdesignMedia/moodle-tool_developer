@@ -27,22 +27,22 @@ self.addEventListener('fetch', event => {
             .then(cache => cache.match(event.request))
             .then(response => {
                 if (response) {
-                    // console.log(`Cache hit: ${url.pathname}`);
+                    console.debug(`Cache hit: ${url.pathname}`);
                     return response;
                 }
 
-                console.log(`Cache miss: ${url.pathname}`);
+                console.debug(`Cache miss: ${url.pathname}`);
                 return fetch(event.request)
                     .then(response => {
                         if (!response || response.status !== 200 || response.type !== 'basic') {
-                            // console.log(`Invalid response: ${url.pathname}`);
+                            console.debug(`Invalid response: ${url.pathname}`);
                             return response;
                         }
 
                         const responseToCache = response.clone();
                         caches.open(CACHE_NAME)
                             .then(cache => {
-                                // console.log(`Adding response to cache: ${url.pathname}`);
+                                console.debug(`Adding response to cache: ${url.pathname}`);
                                 cache.put(event.request, responseToCache);
                             });
 
