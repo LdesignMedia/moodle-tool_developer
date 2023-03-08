@@ -1,4 +1,3 @@
-<?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -15,19 +14,30 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information
- *
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * Auto upgrade /admin/index.php
  *
  * @package   tool_developer
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @copyright 04/03/2023 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
  * @author    Luuk Verhoeven
  **/
-defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'tool_developer';
-$plugin->release = '3.9.1 (Build: 2023030700)';
-$plugin->supported = [39, 401];
-$plugin->version = 2023030800;
-$plugin->requires = 2020051705;
-$plugin->maturity = MATURITY_STABLE;
+import Log from 'core/log';
+
+const Selector = {
+    ContinueButton: '.continuebutton button[type="submit"]',
+};
+
+export const init = () => {
+    Log.log('tool_developer - autoupgrade.js - v1.0.1');
+
+    Log.log('scroll down' + document.body.scrollHeight);
+    const pageHeight = document.body.scrollHeight;
+    window.scrollTo(0, pageHeight);
+
+    // Find the submit button element.
+    const submitButton = document.querySelector(Selector.ContinueButton);
+    if(submitButton){
+        submitButton.click();
+    }
+};

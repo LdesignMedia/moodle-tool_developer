@@ -7,4 +7,11 @@
         <license>MIT</license>
         <licenseversion></licenseversion>
     </library>
+    <library>
+        <location>javascript/</location>
+        <name>sentry/sentry</name>
+        <version>3.3</version>
+        <license>MIT</license>
+        <licenseversion></licenseversion>
+    </library>
 </libraries>

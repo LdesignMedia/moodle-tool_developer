@@ -22,6 +22,7 @@ Should be used in test environments only.
 ## List of features
 - Service worker to load debug javascript once if `cachejs` setting is disabled.
 - Added Sentry DNS is loaded from `SENTRYDNS` environment variable.
+- Auto walkthrough the Moodle upgrade process with javascript, see what's happening .
 - TODO easy see if debug is on (enable fast switching)
 - TODO Record error traces to log
 - TODO debugbar

@@ -30,7 +30,7 @@ defined('MOODLE_INTERNAL') || die;
  *
  * @return void
  */
-function load_sentry() : void {
+function load_sentry(): void {
 
     static $loaded = false;
 
@@ -68,23 +68,33 @@ function tool_developer_before_http_headers(): void {
     }
 
     // Always catch JS errors.
-    $CFG->additionalhtmlhead .= '<script src="https://browser.sentry-cdn.com/7.40.0/bundle.tracing.replay.min.js"
-  integrity="sha384-ucxPsCkRds5vICOoq+CNlwpaY/vlgZdwDqr/I+CKUsm+pBm5r6KNL+Y95Mo0o2tI" crossorigin="anonymous"></script>
-  <script defer>Sentry.init({
-      dsn: "' . getenv('SENTRYDNS') . '",
-      release: "' . parse_url($CFG->wwwroot ?? '', PHP_URL_HOST) . '@1.0.0",
-      tracesSampleRate: 1.0,
-      integrations: [new Sentry.BrowserTracing()],
-      environment : "' . parse_url($CFG->wwwroot ?? '', PHP_URL_HOST) . '",
-      replaysSessionSampleRate: 0.1,
-      replaysOnErrorSampleRate: 1.0,
-      integrations: [
-        new Sentry.Replay({
-          maskAllText: true,
-          blockAllMedia: true,
-        }),
-      ],
-    });</script>';
+    $PAGE->requires->js('/admin/tool/developer/javascript/sentry.js', true);
+    $CFG->additionalhtmlhead .= '<script>
+              function waitForSentry() {
+                  if (typeof Sentry === \'undefined\') {
+                    // Object is not yet available, wait and try again in 100ms
+                    setTimeout(waitForSentry, 100);
+                  } else {
+                    console.log("Sentry loaded");
+                    Sentry.init({
+                      dsn: "' . getenv('SENTRYDNS') . '",
+                      release: "' . parse_url($CFG->wwwroot ?? '', PHP_URL_HOST) . '@1.0.0",
+                      tracesSampleRate: 1.0,
+                      integrations: [new Sentry.BrowserTracing()],
+                      environment : "' . parse_url($CFG->wwwroot ?? '', PHP_URL_HOST) . '",
+                      replaysSessionSampleRate: 0.1,
+                      replaysOnErrorSampleRate: 1.0,
+                      integrations: [
+                        new Sentry.Replay({
+                          maskAllText: true,
+                          blockAllMedia: true,
+                        }),
+                      ],
+                    });
+                  }
+                }
+                waitForSentry();
+             </script>';
 
     if (!empty($CFG->cachejs)) {
         return;
@@ -110,10 +120,22 @@ function tool_developer_before_http_headers(): void {
  * @return void
  */
 function tool_developer_after_config(): void {
+    global $PAGE, $SESSION;
+
     $serviceworker = optional_param('serviceworker', false, PARAM_BOOL);
     if ($serviceworker) {
         header('Content-Type: application/javascript');
-        echo file_get_contents(__DIR__ . '/static-worker.js');
+        echo file_get_contents(__DIR__ . '/javascript/static-worker.js');
         die;
     }
+
+    // Make sure is set.
+    $SESSION->tool_developer_upgrade = $SESSION->tool_developer_upgrade ?? 0;
+
+    if (moodle_needs_upgrading() && $SESSION->tool_developer_upgrade < 6) {
+        // Auto upgrade attempt.
+        $PAGE->requires->js_call_amd('tool_developer/autoupgrade', 'init', [[]]);
+        $SESSION->tool_developer_upgrade = ($SESSION->tool_developer_upgrade ?? 0) + 1;
+    }
+
 }
