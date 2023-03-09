@@ -23,22 +23,40 @@ This plugin provides useful tools for Moodle development, and can greatly enhanc
 - TODO Record error traces to log
 - TODO debugbar
 
-
 ## Installation
-1.  Copy this plugin to the `admin\tool\developer` directory on the server
-2.  Login as administrator
-3.  Go to Site Administrator > Notifications
-4.  Install the plugin
-5.  You will need to fill out the settings.
+
+There are three ways to install this plugin:
+
+### Option 1: Manual Installation
+1. Download the plugin files.
+2. Copy the plugin folder to the `admin\tool\developer` directory on your Moodle server.
+3. Log in as an administrator.
+4. Navigate to Site Administration > Notifications.
+5. Install the plugin.
+6. Fill out the required settings.
+
+### Option 2: Git Installation
+1. Open the command prompt.
+2. Navigate to the Moodle root directory on your server.
+3. Run the following command: `git clone https://github.com/LdesignMedia/moodle-tool_developer.git admin/tool/developer`.
+4. Log in as an administrator.
+5. Navigate to Site Administration > Notifications.
+6. Install the plugin.
+7. Fill out the required settings.
+
+### Option 3: Moodle Plugin Upload
+1. Log in as an administrator.
+2. Navigate to Site Administration > Plugins > Install plugins.
+3. Choose the "Install plugin from ZIP file" option.
+4. Upload the plugin ZIP file.
+5. Follow the on-screen instructions to complete the installation process.
+6. Fill out the required settings.
 
 ## Security
-
-If you discover any security related issues, please email [luuk@ldesignmedia.nl](mailto:luuk@ldesignmedia.nl) instead of using the issue tracker.
+If you discover any security issues with this plugin, please do not use the issue tracker. Instead, send an email to [luuk@ldesignmedia.nl](mailto:luuk@ldesignmedia.nl) so that the issue can be addressed promptly.
 
 ## License
-
-The GNU GENERAL PUBLIC LICENSE. Please see [License File](LICENSE) for more information.
+This plugin is released under the GNU GENERAL PUBLIC LICENSE. Please refer to the [License File](LICENSE) for further details.
 
 ## Contributing
-
-Contributions are welcome and will be fully credited. We accept contributions via Pull Requests on Github.
+We welcome and fully credit contributions to this plugin. Please submit any contributions via pull requests on our [Github repository](https://github.com/LdesignMedia/moodle-tool_developer).
