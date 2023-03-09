@@ -1,7 +1,6 @@
 ## Moodle - tool_developer
 
-This plugin has tools helpful for Moodle development. 
-Should be used in test environments only.
+This plugin provides useful tools for Moodle development, and can greatly enhance the development process. However, it is important to note that it  ❗❗ **should only be used in test environments!**
 
 ## Author
 <img src="https://ldesignmedia.nl/themes/ldesignmedia/assets/images/logo/logo.svg" alt="ldesignmedia" height="70px">
@@ -15,14 +14,11 @@ Should be used in test environments only.
 ![Privacy-friendly](https://img.shields.io/badge/Privacy-friendly-brightgreen.svg)
 ![GitHub Workflow Status (main)](https://img.shields.io/github/actions/workflow/status/LdesignMedia/moodle-tool_developer/ci.yml?branch=main)
 
-
-
-
-
 ## List of features
-- Service worker to load debug javascript once if `cachejs` setting is disabled.
-- Added Sentry DNS is loaded from `SENTRYDNS` environment variable.
-- Auto walkthrough the Moodle upgrade process with javascript, see what's happening .
+- If the `cachejs` setting is disabled, the service worker will now load debug javascript once.
+- Sentry has been added and the *SENTRYDNS* is now loaded from the `SENTRYDNS` environment variable, allowing it to be configured on the server level.
+- The Moodle upgrade process will now be automatically confirmed with JavaScript, giving you real-time visibility into the process without having to manually click any buttons. The script will make up to 8 attempts to complete the process and will allow you to debug any errors that occur.
+
 - TODO easy see if debug is on (enable fast switching)
 - TODO Record error traces to log
 - TODO debugbar
